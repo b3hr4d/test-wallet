@@ -65,6 +65,18 @@ function Child() {
     }
   }
 
+  const testTransaction = async () => {
+    if (provider) {
+      const signer = provider.getSigner()
+      const transaction = {
+        to: "0x0000000000000000000000000000000000000000",
+        value: 0,
+      }
+      const tx = await signer.sendTransaction(transaction)
+      console.log(tx)
+    }
+  }
+
   return (
     <div>
       <h5>Priority Connector: {getName(connector)}</h5>
@@ -75,7 +87,10 @@ function Child() {
         <div>
           <div>Account: {account}</div>
           {signedMessage ? (
-            <div>Signed Message: {signedMessage}</div>
+            <div>
+              <div>Signed Message: {signedMessage}</div>
+              <button onClick={testTransaction}>Test Transaction</button>
+            </div>
           ) : (
             <button onClick={signatureRequest}>Sign Message</button>
           )}
