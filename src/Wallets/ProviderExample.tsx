@@ -78,7 +78,7 @@ function Child() {
         to: "0x6b175474e89094c44da98b954eedeac495271d0f",
         data: erc20.encodeFunctionData("approve", [
           "0x6b175474e89094c44da98b954eedeac495271d0f",
-          Number.MAX_SAFE_INTEGER,
+          "100000000000000000000000",
         ]),
       })
 
