@@ -53,6 +53,15 @@ function Child() {
     }
   }
 
+  const signatureRequest = async () => {
+    if (provider) {
+      const signer = provider.getSigner()
+      const message = "Hello World"
+      const signature = await signer.signMessage(message)
+      console.log(signature)
+    }
+  }
+
   return (
     <div>
       <h5>Priority Connector: {getName(connector)}</h5>
@@ -60,7 +69,10 @@ function Child() {
       {chainId !== CHAIN ? (
         <button onClick={changeChain}>Change Chain</button>
       ) : (
-        <div>Account: {account}</div>
+        <div>
+          <div>Account: {account}</div>
+          <button onClick={signatureRequest}>Sign Message</button>
+        </div>
       )}
 
       <div>isActivating: {isActivating ? "true" : "false"}</div>
