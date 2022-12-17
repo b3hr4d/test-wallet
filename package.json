@@ -7,7 +7,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode=production --hot",
     "start-dev": "webpack-dev-server --open --mode=development --hot",
-    "build": "webpack --mode=production"
+    "build": "npm version patch && rm -rf ./dist && webpack --mode=production"
   },
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.6.3",

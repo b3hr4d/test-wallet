@@ -7,6 +7,7 @@ import {
 import { MetaMask } from "@web3-react/metamask"
 import { Network } from "@web3-react/network"
 import { WalletConnect } from "@web3-react/walletconnect"
+import { useState } from "react"
 import ConnectWallet from "."
 import {
   coinbaseWallet,
@@ -32,6 +33,7 @@ const connectors: [
 ]
 
 function Child() {
+  const [signedMessage, setSignedMessage] = useState<string>("")
   const { connector, provider, account, chainId, isActivating, isActive } =
     useWeb3React()
 
@@ -58,6 +60,7 @@ function Child() {
       const signer = provider.getSigner()
       const message = "Hello World"
       const signature = await signer.signMessage(message)
+      setSignedMessage(signature)
       console.log(signature)
     }
   }
@@ -71,7 +74,11 @@ function Child() {
       ) : (
         <div>
           <div>Account: {account}</div>
-          <button onClick={signatureRequest}>Sign Message</button>
+          {signedMessage ? (
+            <div>Signed Message: {signedMessage}</div>
+          ) : (
+            <button onClick={signatureRequest}>Sign Message</button>
+          )}
         </div>
       )}
 
