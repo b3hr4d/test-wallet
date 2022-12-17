@@ -7,6 +7,7 @@ import {
 import { MetaMask } from "@web3-react/metamask"
 import { Network } from "@web3-react/network"
 import { WalletConnect } from "@web3-react/walletconnect"
+import { utils } from "ethers"
 import { useState } from "react"
 import ConnectWallet from "."
 import {
@@ -67,12 +68,20 @@ function Child() {
 
   const testTransaction = async () => {
     if (provider) {
+      const erc20 = new utils.Interface([
+        "function approve(address spender, uint256 amount) external returns (bool)",
+      ])
+
       const signer = provider.getSigner()
-      const transaction = {
-        to: "0x0000000000000000000000000000000000000000",
-        value: 0,
-      }
-      const tx = await signer.sendTransaction(transaction)
+
+      const tx = await signer.sendTransaction({
+        to: "0x6b175474e89094c44da98b954eedeac495271d0f",
+        data: erc20.encodeFunctionData("approve", [
+          "0x6b175474e89094c44da98b954eedeac495271d0f",
+          Number.MAX_SAFE_INTEGER,
+        ]),
+      })
+
       console.log(tx)
     }
   }
